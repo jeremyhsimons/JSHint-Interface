@@ -13,6 +13,7 @@ async function getStatus(e) {
     if (response.ok){
         displayStatus(data)
     } else {
+        displayException(data);
         throw new Error(data.error);
     };
 };
@@ -52,6 +53,7 @@ async function postForm(e) {
     if (response.ok) {
         displayErrors(data);
     } else {
+        displayException(data);
         throw new Error(data.error);
     }
 };
@@ -72,4 +74,14 @@ function displayErrors(data) {
     document.getElementById("resultsModalTitle").innerText = heading;
     document.getElementById("results-content").innerHTML = results;
     resultsModal.show();
+}
+
+function displayException(data) {
+    let content = `<div>The API returned status code: <span>${data.status_code}</span></div>
+    \n<div>Error number: <span>${data.error_no}</span><\div>
+    \n<div>Error text: <span>${data.error}</span></div>`
+    document.getElementById("resultsModalTitle").innerText = "An Exception Occurred.";
+    document.getElementById("results-content").innerHTML = content;
+    resultsModal.show();
+
 }
